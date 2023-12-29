@@ -176,6 +176,8 @@ palettes = [
     "building"
 ]
 
+output_path = "./static/inpaint"
+
 def lerp(tp1, tp2, w1, w2 = None):
     if w2 is None:
         w2 = 1 - w1
@@ -201,9 +203,11 @@ def combine(origin, anonys, masks, id):
                 p = anony[h, w]
                 weights.append((sum(mask[h, w]) / (3 * 255)) ** 0.25)
             ans[h, w] = compute(weights, anonys, (h, w), origin[h, w])
-    Image.fromarray(np.uint8(ans)).save("./static/inpaint/%s.png"%id, "png")
+    Image.fromarray(np.uint8(ans)).save(output_path + "/%s.png"%id, "png")
 
 def start(origin_img_path, input_img_path, mask_img_path, id, time):
+    if not os.path.exists(output_path):
+        os.mkdir(output_path)
     global is_running
     anonys = []
     masks = []
@@ -269,9 +273,9 @@ def query():
 def download():
     id = request.form["id"]
     if id in result_imgs:
-        filename = "./static/inpaint/%s.png"%id
+        filename = output_path + "/%s.png"%id
     else:
-        filename = "./static/inpaint/default.png"
+        filename = output_path + "/default.png"
     filename = os.path.abspath(filename)
     return send_file(filename)
 

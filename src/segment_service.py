@@ -51,7 +51,11 @@ palette_color = {
 
 noise_std = 64
 
+output_path = "./static/segment"
+
 def start(img_path, id, time):
+    if not os.path.exists(output_path):
+        os.mkdir(output_path)
     global is_running, model
     result = inference_segmentor(model, img_path)
     # show the results
@@ -60,7 +64,7 @@ def start(img_path, id, time):
     img = model.show_result(img_path, result,
                             palette=get_palette(palette),
                             show=False, opacity=1.0)[:, :, ::-1]
-    Image.fromarray(np.uint8(img)).save("./static/segment/%s.png"%id, "png")
+    Image.fromarray(np.uint8(img)).save(output_path + "/%s.png"%id, "png")
     origin = np.array(Image.open(img_path).convert("RGB"))
     shape = img.shape
 
@@ -77,8 +81,8 @@ def start(img_path, id, time):
         err255 = (target >= 255)
         target = (1 - err0) * (1 - err255) * target + err255 * 255.0
 
-        Image.fromarray(np.uint8(target)).save("./static/segment/classes/%s_no_%s.png"%(id, cat), "png")
-        Image.fromarray(np.uint8(mask)).save("./static/segment/classes/%s_mask_%s.png"%(id, cat), "png")
+        Image.fromarray(np.uint8(target)).save(output_path + "/classes/%s_no_%s.png"%(id, cat), "png")
+        Image.fromarray(np.uint8(mask)).save(output_path + "/classes/%s_mask_%s.png"%(id, cat), "png")
     
     result_imgs[id] = time
     print("Finish mission %s"%id)
@@ -113,9 +117,9 @@ def query():
 def download():
     id = request.form["id"]
     if id in result_imgs:
-        filename = "./static/segment/%s.png"%id
+        filename = output_path + "/%s.png"%id
     else:
-        filename = "./static/segment/default.png"
+        filename = output_path + "/default.png"
     filename = osp.abspath(filename)
     return send_file(filename)
 
