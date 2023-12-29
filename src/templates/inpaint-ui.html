@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LDM Anonymizor WebUI</title>
+    <script type="text/javascript" src="static/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+    <p>Origin Image Path: <input type="text" id="origin" style="width: 500px" /></p>
+    <p>Prefix of Input Image Path: <input type="text" id="input" style="width: 500px" /></p>
+    <p>Prefix of Mask Image Path: <input type="text" id="mask" style="width: 500px" /></p>
+    <form action="./download" method="post" id="download" hidden>
+        <input type="text" name="id" id="mission_id" />
+    </form>
+    <script type="text/javascript">
+        let missionId = null;
+
+        function go() {
+            $.post("./anonymize", { origin: $("#origin").val(), input: $("#input").val(), mask: $("#mask").val() }, function(result) {
+                result = JSON.parse(result);
+                if(result.status != 1200) {
+                    alert("Error "+ result.status + ": "+ result.message);
+                    return;
+                }
+                missionId = result.id;
+            });
+        }
+
+        setInterval(function() {
+            if(!missionId) return;
+            $.post('./query', { id: missionId }, function(result) {
+                result = JSON.parse(result);
+                if(result.status != 1200) {
+                    alert("Error "+ result.status + ": "+ result.message);
+                    return;
+                }
+                if(result.finished) {
+                    $("#mission_id").val(missionId);
+                    missionId = null;
+                    document.getElementById("download").submit();
+                }
+            });
+        }, 5000);
+    </script>
+    <button onclick="go()">Submit</button>
+</body>
+</html>

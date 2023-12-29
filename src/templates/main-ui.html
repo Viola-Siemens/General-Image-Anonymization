@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Main WebUI</title>
+    <script type="text/javascript" src="static/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+    <form id="upload" enctype="multipart/form-data">
+        <p>Image Upload: <input type="file" name="file" id="upload-file" /></p>
+    </form>
+    <button onclick="go()">Submit</button>
+    <img src="static/nope.png" id="before-img" alt="Before" width="400px" />
+    <img src="static/nope.png" id="after-img" alt="After" width="400px" />
+    
+    <form action="./download" method="post" id="download" hidden>
+        <input type="text" name="id" id="mission_id" />
+    </form>
+    <script type="text/javascript">
+        let missionId = null;
+
+        function go() {
+            if(document.getElementById("upload-file").files.length <= 0) {
+                alert("Please upload the image first.");
+                return;
+            }
+            $.ajax({
+                url: "./main",
+                type: "POST",
+                data: new FormData($('#upload')[0]),
+                cache: false,
+                contentType : false,
+                processData : false,
+                success: function(result) {
+                    result = JSON.parse(result);
+                    if(result.status != 1200) {
+                        alert("Error "+ result.status + ": "+ result.message);
+                        return;
+                    }
+                    missionId = result.id;
+                    $('#before-img').attr("src", result.src);
+                }
+            });
+        }
+
+        setInterval(function() {
+            if(!missionId) return;
+            $.post('./query', { id: missionId }, function(result) {
+                result = JSON.parse(result);
+                if(result.status != 1200) {
+                    alert("Error "+ result.status + ": "+ result.message);
+                    return;
+                }
+                if(result.finished) {
+                    $('#after-img').attr("src", "static/results/" + missionId + ".png");
+                    missionId = null;
+                }
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
