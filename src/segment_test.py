@@ -40,6 +40,8 @@ output_path = "segment"
 def start(img_path, id, time):
     if not os.path.exists(output_path):
         os.mkdir(output_path)
+    if not os.path.exists(output_path + "/classes"):
+        os.mkdir(output_path + "/classes")
     global is_running, model
     result = inference_segmentor(model, img_path)
     # show the results
