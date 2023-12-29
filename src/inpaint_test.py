@@ -173,7 +173,7 @@ palettes = [
     "building"
 ]
 
-output_path = "./inpaint-old"
+output_path = "inpaint-old"
 
 def lerp(tp1, tp2, w1, w2 = None):
     if w2 is None:

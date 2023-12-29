@@ -176,7 +176,7 @@ palettes = [
     "building"
 ]
 
-output_path = "./static/inpaint"
+output_path = "static/inpaint"
 
 def lerp(tp1, tp2, w1, w2 = None):
     if w2 is None:

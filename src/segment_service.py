@@ -51,7 +51,7 @@ palette_color = {
 
 noise_std = 64
 
-output_path = "./static/segment"
+output_path = "static/segment"
 
 def start(img_path, id, time):
     if not os.path.exists(output_path):
