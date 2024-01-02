@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 # models
-src/models/
+src/models/**/*.ckpt
+src/models/**/*.pth
