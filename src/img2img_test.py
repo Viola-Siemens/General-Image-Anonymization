@@ -130,9 +130,9 @@ t_enc = int(strength * ddim_steps)
 print(f"target t_enc is {t_enc} steps")
 
 sampler.make_schedule(ddim_num_steps=ddim_steps, ddim_eta=1.0, verbose=False)
+precision_scope = autocast
 
 def main():
-    precision_scope = autocast
     for root, dirs, files in os.walk("inpaint-old", topdown = False):
         for fn in files:
             if fn.endswith(".png"):
