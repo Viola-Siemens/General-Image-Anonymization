@@ -17,4 +17,4 @@ for root, dirs, files in os.walk(sys.argv[1], topdown = False):
             filename = os.path.join(root, fn)
             segment_start(filename, uid, int(time.time()))
             inpaint_start(filename, "segment/classes/%s_no" % uid, "segment/classes/%s_mask" % uid, uid, int(time.time()))
-            img2img_start("inpaint-old/%s.png"%uid, str(uid), int(time.time()))
+            img2img_start("inpaint-old/%s.png"%uid, "%s.png"%uid, int(time.time()))
