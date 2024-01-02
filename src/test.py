@@ -1,3 +1,4 @@
+# from pixelize_test import start as inpaint_start
 from inpaint_test import start as inpaint_start
 from segment_test import start as segment_start
 import os

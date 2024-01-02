@@ -38,3 +38,23 @@ cd ops_dcnv3
 sh make.sh
 ```
 
+### Anonymization
+
+The default pipeline is:
+
+1. **Input** image $\mathcal{A}$ ;
+2. **Segment** $\mathcal{A}$ and output segmentation result $\mathcal{S}$ ;
+3. For each label $l$ in $L$ (default: ["car", "truck", "human", "traffic sign", "building", "road"]) :
+   1. Get pixel-level mask $\mathcal{S}_l$ from $\mathcal{S}$ ;
+   2. Generate random noise $\mathcal{N}_l$ with the shape of mask $\mathcal{S}_l$, cover $\mathcal{A}$ with the random noise $\mathcal{N}_l$, and output as $\tilde{\mathcal{A}_l}$ ;
+   3. **Anonymize** $\tilde{\mathcal{A}_l}$ with label $l$, and output as $\mathcal{B}_l$ ;
+4. **Merge** all $\mathcal{B}_l$ by corresponding mask $\mathcal{S}_l$ with input image $\mathcal{A}$, and output as $\hat{\mathcal{B}}$ ;
+5. **Repaint** (img2img) $\hat{\mathcal{B}}$ and output as $\mathcal{B}$ ;
+6. Output $\mathcal{B}$ .
+
+We provides four different ways for the "Anonymize" step:
+
+- **Stable Diffusion Inpainting** (Recommended)
+- Blur
+- Pixelize
+- Black Mask

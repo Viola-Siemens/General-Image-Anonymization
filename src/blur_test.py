@@ -55,13 +55,3 @@ def start(origin_img_path, input_img_path, mask_img_path, id, time):
     result = all_mask * blur + img * (1.0 - all_mask)
     Image.fromarray(result.astype(np.uint8)).save("blur/%s.png"%id, "png")
     print("Finish mission %s"%id)
-
-NAMESPACE_TEST = uuid.uuid3(uuid.NAMESPACE_DNS, "test")
-
-for root, dirs, files in os.walk("dataset", topdown = False):
-    for fn in files:
-        uid = uuid.uuid3(NAMESPACE_TEST, fn)
-        if fn.endswith(".png"):
-            print("Deal with %s" % fn)
-            filename = os.path.join(root, fn)
-            start(filename, "segment/classes/%s_no" % uid, "segment/classes/%s_mask" % uid, uid, int(time.time()))
