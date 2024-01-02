@@ -40,6 +40,14 @@ sh make.sh
 
 ### Anonymization
 
+Run the following command in terminal:
+
+```bash
+python main.py <folder>
+```
+
+### Pipeline
+
 The default pipeline is:
 
 1. **Input** image $\mathcal{A}$ ;
@@ -52,9 +60,9 @@ The default pipeline is:
 5. **Repaint** (img2img) $\hat{\mathcal{B}}$ and output as $\mathcal{B}$ ;
 6. Output $\mathcal{B}$ .
 
-We provides four different ways for the "Anonymize" step:
+We provides four different ways for the "Anonymize" step, you can edit `main.py`, import them from corresponding files instead of `inpaint_test` to use them:
 
-- **Stable Diffusion Inpainting** (Recommended)
+- **Stable Diffusion Inpainting** (default)
 - Blur
 - Pixelize
 - Black Mask
