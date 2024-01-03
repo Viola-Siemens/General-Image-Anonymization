@@ -37,6 +37,8 @@ noise_std = 64
 
 output_path = "segment"
 
+np.random.seed(42)
+
 def start(img_path, id, time):
     if not os.path.exists(output_path):
         os.mkdir(output_path)

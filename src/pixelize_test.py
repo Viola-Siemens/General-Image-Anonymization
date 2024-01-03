@@ -17,6 +17,8 @@ palettes = [
 
 radius = 8
 
+output_path = "pixelize"
+
 def pixelize1(img: np.ndarray):
     ret = np.zeros((512, 1024, 3))
     for x in range(0, 1024):
@@ -25,6 +27,8 @@ def pixelize1(img: np.ndarray):
     return ret
 
 def start(origin_img_path, input_img_path, mask_img_path, id, time):
+    if not os.path.exists(output_path):
+        os.mkdir(output_path)
     all_mask = np.zeros((512, 1024, 3))
     img = np.array(Image.open(origin_img_path).resize((1024, 512), Image.LANCZOS))
     for target in palettes:
@@ -34,5 +38,5 @@ def start(origin_img_path, input_img_path, mask_img_path, id, time):
     all_mask /= 255.0
     pixelize = pixelize1(img)
     result = all_mask * pixelize + img * (1.0 - all_mask)
-    Image.fromarray(result.astype(np.uint8)).save("pixelize/%s.png"%id, "png")
+    Image.fromarray(result.astype(np.uint8)).save(output_path + "/%s.png"%id, "png")
     print("Finish mission %s"%id)

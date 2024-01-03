@@ -24,6 +24,8 @@ for i in range(sz):
         kernel[i, j, :] = np.exp(-((i - radius) ** 2 + (j - radius) ** 2) / (2 * sigma_2)) / (2 * np.pi * sigma_2)
 kernel = kernel / kernel.sum() * 3
 
+output_path = "blur"
+
 def blur1(img: np.ndarray):
     padded = np.zeros((512 + 2 * radius, 1024 + 2 * radius, 3))
     padded[radius:512+radius, radius:1024+radius, :] = img
@@ -44,6 +46,8 @@ def blur1(img: np.ndarray):
     return ret
 
 def start(origin_img_path, input_img_path, mask_img_path, id, time):
+    if not os.path.exists(output_path):
+        os.mkdir(output_path)
     all_mask = np.zeros((512, 1024, 3))
     img = np.array(Image.open(origin_img_path).resize((1024, 512), Image.LANCZOS))
     for target in palettes:
@@ -53,5 +57,5 @@ def start(origin_img_path, input_img_path, mask_img_path, id, time):
     all_mask /= 255.0
     blur = blur1(img)
     result = all_mask * blur + img * (1.0 - all_mask)
-    Image.fromarray(result.astype(np.uint8)).save("blur/%s.png"%id, "png")
+    Image.fromarray(result.astype(np.uint8)).save(output_path + "/%s.png"%id, "png")
     print("Finish mission %s"%id)

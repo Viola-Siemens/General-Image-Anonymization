@@ -66,3 +66,12 @@ We provides four different ways for the "Anonymize" step, you can edit `main.py`
 - Blur
 - Pixelize
 - Black Mask
+
+### Customize Your Own Plugin
+
+Implement the given template `custom_test.py` to create a plugin for "Anonymize" step.
+
+## TODO
+
+- Replace os.path to pathlib to improve compatibility
+- 
