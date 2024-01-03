@@ -75,3 +75,15 @@ Implement the given template `custom_test.py` to create a plugin for "Anonymize"
 
 - Replace os.path to pathlib to improve compatibility
 - 
+
+
+
+## Gallery
+
+![Input Image](src/dataset/00.png)
+
+![Segmentation Result](assets/step_2.png)
+
+![Inpainted Result](assets/step_3.png)
+
+![Image2Image Result](assets/step_4.png)
