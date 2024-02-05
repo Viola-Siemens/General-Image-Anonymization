@@ -76,6 +76,63 @@ Implement the given template `custom_test.py` to create a plugin for "Anonymize"
 - Replace os.path to pathlib to improve compatibility
 - 
 
+## Hyperparameters and Prompts
+
+### Inpainting
+
+#### Human
+
+**Positive Prompt**: masterpiece, realistic, cityscapes, street, human, real
+
+**Negative Prompt**: watermark, username, error, anime, nsfw, low quality, lowres, no\_humans
+
+#### Car
+
+**Positive Prompt**: masterpiece, realistic, cityscapes, street, car, no\_humans
+
+**Negative Prompt**: watermark, username, error, anime, nsfw, low quality, lowres, human
+
+#### Traffic Sign
+
+**Positive Prompt**: masterpiece, realistic, cityscapes, street, traffic sign, no\_humans
+
+**Negative Prompt**: watermark, username, error, anime, nsfw, low quality, lowres, human
+
+#### Road
+
+**Positive Prompt**: masterpiece, realistic, cityscapes, street, road, no\_humans
+
+**Negative Prompt**: watermark, username, error, anime, nsfw, low quality, lowres, human, animal, painting, poster
+
+#### Building
+
+**Positive Prompt**: masterpiece, realistic, cityscapes, street, building, no\_humans
+
+**Negative Prompt**: watermark, username, error, anime, nsfw, low quality, lowres, human, animal, painting
+
+#### Hyperparameters of Inpainting:
+
+**Denoising Steps**: 50 (i.e. Strength = 1.0)
+
+**Scale**: 9.0
+
+**Size of input and output images**: 1024×512
+
+### Hamonizer
+
+#### Text Prompt
+
+**Positive Prompt**: masterpiece, best quality, realistic, photo, street, cityscapes, traffic
+
+**Negative Prompt**: watermark, username, error, anime, nsfw, low quality, lowres, bad face
+
+#### Hyperparameters
+
+**Denoising Steps**: 10 (i.e. Strength = 0.2)
+
+**Scale**: 9.0
+
+**Size of input and output images**: 1024×512
 
 
 ## Gallery
