@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Official PyTorch implementation for General Image Anonymization based on Stable Diffusion.
+Official PyTorch implementation for *SVIA: a General Street View Image Anonymization Pipeline for Self-driving Applications*.
 
 ## Usage
 
